@@ -14,7 +14,10 @@ download_main <- function(){
   pb <- txtProgressBar(min = 0, max = nrow(stocks), style = 3)
   n = 1
   for(id in stocks$idcaps){
-    download_stock(id)
+    data <- tryCatch(download_stock(id), warning = function(w) w)
+    if (is(data,"warning")){
+      stop("warning found : ", all)
+    }
     setTxtProgressBar(pb,n)
     n = n + 1
   }
@@ -65,6 +68,7 @@ download_stock <- function(id){
 	page <- as.data.frame(bindme)
 	names(page) <- c("date","open","high","low","close","volume","adj_close")
 	page$id <- id
+	
 	
 	write.csv(page,file.path("C:/Users/bstrub/Documents/take_2/analysis_input/",paste0(id,".csv")),row.names=FALSE,na="")
 

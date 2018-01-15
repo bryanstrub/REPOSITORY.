@@ -12,6 +12,7 @@ file.path(code,"analysis.R") %>% source
 
 download_main()
 
-analysis_main()
+# analysis_main()
+
 
 
